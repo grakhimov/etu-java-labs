@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="413.0" prefWidth="719.0" stylesheets="@../assets/style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javalabs.forms.StaffForm">
+   <children>
+      <AnchorPane prefHeight="413.0" prefWidth="719.0">
+         <children>
+            <TextField fx:id="firstname" focusTraversable="false" layoutX="39.0" layoutY="47.0" promptText="Имя" />
+            <TextField fx:id="lastname" focusTraversable="false" layoutX="247.0" layoutY="47.0" promptText="Фамилия" />
+            <Pane layoutX="488.0" layoutY="47.0" prefHeight="187.0" prefWidth="186.0" styleClass="userimage">
+               <children>
+                  <ImageView fx:id="photo" fitHeight="185.0" fitWidth="180.0" layoutX="4.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/noimage.jpeg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <ComboBox fx:id="division" layoutX="39.0" layoutY="101.0" prefHeight="26.0" prefWidth="171.0" promptText="Подразделение" />
+            <ComboBox fx:id="position" layoutX="247.0" layoutY="101.0" prefHeight="26.0" prefWidth="171.0" promptText="Должность" />
+            <Button layoutX="476.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#chooseFile" prefHeight="26.0" prefWidth="213.0" text="Загрузить фото" />
+            <Button fx:id="saveButton" layoutX="563.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#saveForm" prefHeight="44.0" prefWidth="126.0" text="Сохранить">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>
