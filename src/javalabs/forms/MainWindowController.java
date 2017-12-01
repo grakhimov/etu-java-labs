@@ -13,8 +13,10 @@ public class MainWindowController {
 
     @FXML
     private Button addStaffButton;
+
     @FXML
     private Button editStaffButton;
+
     @FXML
     private Button deleteStaffButton;
 
@@ -23,7 +25,7 @@ public class MainWindowController {
 
     @FXML
     private void initialize() {
-        this.staffModel= new StaffModel(staffTable, editStaffButton, deleteStaffButton);
+        this.staffModel = new StaffModel(staffTable, editStaffButton, deleteStaffButton);
     }
 
     public void addClick() throws Exception{

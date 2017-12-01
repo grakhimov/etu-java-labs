@@ -17,7 +17,6 @@ import java.io.File;
 import java.sql.Blob;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 import javalabs.classes.Staff;
 import javalabs.libraries.Database;
@@ -61,7 +60,7 @@ public class StaffForm {
         fileChooser.getExtensionFilters().add(extFilter);
         Stage stage = (Stage) photo.getScene().getWindow();
         File file = fileChooser.showOpenDialog(stage);
-        Image image = new Image(file.toURI().toString());
+        Image image = new Image(file.toURI().toString(), 200, 200, true, true);
         photo.setImage(image);
     }
 
@@ -77,7 +76,7 @@ public class StaffForm {
         String lastName = lastname.getText();
         int divisionId = divisionMap.get((String) division.getValue());
         int positionId = positionMap.get((String) position.getValue());
-        Blob photoStream = Images.imageToBlob(photo);
+        Blob photoStream = Images.imageToMysqlBlob(photo);
         Staff.create(firstName, lastName, divisionId, positionId, photoStream);
         stage.close();
     }
@@ -98,10 +97,8 @@ public class StaffForm {
         ObservableList divisionsData = FXCollections.observableArrayList();
         Database db = new Database();
         List<Object[]> divisionList = db.query("SELECT id, division_name FROM divisions");
-        int size = divisionList.size();
-        for(int i = 0; i < size; i++){
+        for(Object[] row : divisionList){
             // Заполнение строк таблицы
-            Object[] row = divisionList.get(i);
             divisionMap.put((String)row[1], (Integer)row[0]);
             divisionsData.add(row[1]);
         }
@@ -113,10 +110,8 @@ public class StaffForm {
         ObservableList positionsData = FXCollections.observableArrayList();
         Database db = new Database();
         List<Object[]> positionList = db.query("SELECT id, position_name FROM positions");
-        int size = positionList.size();
-        for(int i = 0; i < size; i++){
+        for(Object[] row : positionList){
             // Заполнение строк таблицы
-            Object[] row = positionList.get(i);
             positionMap.put((String)row[1], (int)row[0]);
             positionsData.add(row[1]);
         }
