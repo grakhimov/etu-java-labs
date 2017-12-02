@@ -21,6 +21,7 @@ import java.util.List;
 import javalabs.classes.Staff;
 import javalabs.libraries.Database;
 import javalabs.libraries.Images;
+import javalabs.libraries.CropImage;
 
 
 public class StaffForm {
@@ -60,8 +61,10 @@ public class StaffForm {
         fileChooser.getExtensionFilters().add(extFilter);
         Stage stage = (Stage) photo.getScene().getWindow();
         File file = fileChooser.showOpenDialog(stage);
-        Image image = new Image(file.toURI().toString(), 200, 200, true, true);
-        photo.setImage(image);
+        Image image = new Image(file.toURI().toString());
+        //Image image = new Image(file.toURI().toString(), 200, 200, true, true);
+        CropImage cropped = new CropImage(image);
+        photo.setImage(cropped.getImageView());
     }
 
     @FXML

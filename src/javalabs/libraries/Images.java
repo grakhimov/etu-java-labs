@@ -10,21 +10,21 @@ import java.io.InputStream;
 import java.sql.Blob;
 
 import javafx.scene.image.*;
-import org.jetbrains.annotations.NotNull;
 
 public class Images {
     // Картинка в Blob
     public static Blob imageToMysqlBlob(ImageView photo) throws Exception{
         BufferedImage bImage = SwingFXUtils.fromFXImage(photo.getImage(), null);
         ByteArrayOutputStream s = new ByteArrayOutputStream();
-        ImageIO.write(bImage, "jpg", s);
+        // Все изображения пишутся как png из за проблем с совместимостью форматов
+        ImageIO.write(bImage, "png", s);
         byte[] res  = s.toByteArray();
         Blob blob = new javax.sql.rowset.serial.SerialBlob(res);
         s.close();
         return blob;
     }
+
     // Файл в Blob
-    @NotNull
     public static Blob readFileAsMysqlBlob(String filepath) throws Exception{
         File file = new File(filepath);
         byte[] bytesArray = new byte[(int) file.length()];
