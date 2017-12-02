@@ -57,7 +57,7 @@ public class StaffForm {
     @FXML
     private void chooseFile(){
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPEG files (.jpg)", "*.jpg");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPEG files", "*.jpg", "*.jpeg", "*.JPG", "*.JPEG");
         fileChooser.getExtensionFilters().add(extFilter);
         Stage stage = (Stage) photo.getScene().getWindow();
         File file = fileChooser.showOpenDialog(stage);
