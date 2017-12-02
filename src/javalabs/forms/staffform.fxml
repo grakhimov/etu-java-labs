@@ -15,9 +15,9 @@
          <children>
             <TextField fx:id="firstname" focusTraversable="false" layoutX="39.0" layoutY="47.0" promptText="Имя" />
             <TextField fx:id="lastname" focusTraversable="false" layoutX="247.0" layoutY="47.0" promptText="Фамилия" />
-            <Pane layoutX="488.0" layoutY="47.0" prefHeight="187.0" prefWidth="186.0" styleClass="userimage">
+            <Pane layoutX="488.0" layoutY="47.0" prefHeight="208" prefWidth="208" styleClass="userimage">
                <children>
-                  <ImageView fx:id="photo" fitHeight="185.0" fitWidth="180.0" layoutX="4.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="photo" fitHeight="200.0" fitWidth="200.0" layoutX="4.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/noimage.jpeg" />
                      </image>
@@ -26,7 +26,7 @@
             </Pane>
             <ComboBox fx:id="division" layoutX="39.0" layoutY="101.0" prefHeight="26.0" prefWidth="171.0" promptText="Подразделение" />
             <ComboBox fx:id="position" layoutX="247.0" layoutY="101.0" prefHeight="26.0" prefWidth="171.0" promptText="Должность" />
-            <Button layoutX="476.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#chooseFile" prefHeight="26.0" prefWidth="213.0" text="Загрузить фото" />
+            <Button layoutX="486.0" layoutY="271.0" mnemonicParsing="false" onMouseClicked="#chooseFile" prefHeight="26.0" prefWidth="213.0" text="Загрузить фото" />
             <Button fx:id="saveButton" layoutX="563.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#saveForm" prefHeight="44.0" prefWidth="126.0" text="Сохранить">
                <font>
                   <Font size="15.0" />

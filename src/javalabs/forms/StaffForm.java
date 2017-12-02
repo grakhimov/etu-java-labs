@@ -15,20 +15,29 @@ import javafx.scene.image.*;
 
 import java.io.File;
 import java.sql.Blob;
+import java.sql.Ref;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.function.Function;
 
 import javalabs.classes.Staff;
 import javalabs.libraries.Database;
 import javalabs.libraries.Images;
 import javalabs.libraries.CropImage;
+import javalabs.models.StaffModel;
+import javalabs.models.StaffModel.*;
+
+import javax.naming.Context;
 
 
-public class StaffForm {
+public class StaffForm{
 
     private HashMap<String, Integer> divisionMap = new HashMap< String, Integer>();
 
     private HashMap<String, Integer> positionMap = new HashMap< String, Integer>();
+
+    private StaffModel context;
 
     @FXML
     private ImageView photo;
@@ -62,18 +71,12 @@ public class StaffForm {
         Stage stage = (Stage) photo.getScene().getWindow();
         File file = fileChooser.showOpenDialog(stage);
         Image image = new Image(file.toURI().toString());
-        //Image image = new Image(file.toURI().toString(), 200, 200, true, true);
         CropImage cropped = new CropImage(image);
         photo.setImage(cropped.getImageView());
     }
 
     @FXML
     private void saveForm() throws Exception{
-        /*Alert alert = new Alert(null,
-                "Вы неслыханный простофиля!",
-                ButtonType.APPLY);
-        Optional<ButtonType> result = alert.showAndWait();*/
-
         Stage stage = (Stage) saveButton.getScene().getWindow();
         String firstName = firstname.getText();
         String lastName = lastname.getText();
@@ -84,11 +87,12 @@ public class StaffForm {
         stage.close();
     }
 
+
     public void init() throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("staffform.fxml"));
+        Parent rooter = FXMLLoader.load(getClass().getResource("staffform.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(rooter);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Добавление сотрудника");

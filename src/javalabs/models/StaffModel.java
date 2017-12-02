@@ -1,20 +1,24 @@
 package javalabs.models;
 
+import javalabs.forms.StaffForm;
+
+import javafx.scene.control.*;
 import javalabs.classes.Staff;
 import javalabs.libraries.Database;
 import java.util.List ;
+import java.util.Optional;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.Button;
 import javafx.scene.image.*;
+import javafx.scene.input.MouseEvent;
+import jdk.nashorn.internal.objects.annotations.Function;
+
+import javax.naming.Context;
 
 
 public class StaffModel {
     private ObservableList<Staff> staffData = FXCollections.observableArrayList();
-
     // Таблица и основные колонки
     private TableView<Staff> staffTable;
     // Имя
@@ -29,10 +33,15 @@ public class StaffModel {
     private TableColumn<Staff, String> cardNumber;
     // Фотография
     private TableColumn<Staff, ImageView> photo;
+    // Текущая выбранная строка таблицы
+    private Staff currentItem = null;
+    // Окно создания и редактирования сотрудника
+    private StaffForm window;
 
     /* Связанные кнопки */
-    private Button editButton;
-    private Button deleteButton;
+    private Button addStaffButton;
+    private Button editStaffButton;
+    private Button deleteStaffButton;
 
     // Инициализация
     private void init() {
@@ -46,13 +55,18 @@ public class StaffModel {
         cardNumber.setCellValueFactory(new PropertyValueFactory<Staff, String>("cardNumber"));
         photo.setCellValueFactory(new PropertyValueFactory<Staff, ImageView>("photo"));
         staffTable.setItems(staffData);
+        // Обработчики событий
+        addStaffButton.setOnMouseClicked(this::onAddClick);
+        editStaffButton.setOnMouseClicked(this::onEditClick);
+        deleteStaffButton.setOnMouseClicked(this::onDeleteClick);
     }
 
     @SuppressWarnings("unchecked")
-    public StaffModel(TableView<Staff> staffTable, Button editButton, Button deleteButton){
+    public StaffModel(TableView<Staff> staffTable, Button addStaffButton, Button editButton, Button deleteButton){
         // Связанные кнопки
-        this.editButton = editButton;
-        this.deleteButton = deleteButton;
+        this.addStaffButton = addStaffButton;
+        this.editStaffButton = editButton;
+        this.deleteStaffButton = deleteButton;
         // Получение объекта таблицы из корневого контроллера и выборка столбцов
         this.staffTable     = staffTable;
         this.firstName      = (TableColumn<Staff, String>) staffTable.getColumns().get(0);
@@ -61,6 +75,7 @@ public class StaffModel {
         this.position       = (TableColumn<Staff, String>) staffTable.getColumns().get(3);
         this.cardNumber     = (TableColumn<Staff, String>) staffTable.getColumns().get(4);
         this.photo          = (TableColumn<Staff, ImageView>) staffTable.getColumns().get(5);
+        // Обработчик выбора строки таблицы
         this.staffTable.setOnMouseClicked(this::onSelectRow);
         init(); // Инициализация
     }
@@ -84,16 +99,45 @@ public class StaffModel {
         }
     }
 
-    private void onSelectRow(javafx.scene.input.MouseEvent event){
-        Staff item = staffTable.getSelectionModel().getSelectedItem();
-        if(item != null){
-            editButton.setDisable(false);
-            deleteButton.setDisable(false);
+    private void onSelectRow(MouseEvent event){
+        currentItem = staffTable.getSelectionModel().getSelectedItem();
+        if(currentItem != null){
+            editStaffButton.setDisable(false);
+            deleteStaffButton.setDisable(false);
         }
     }
 
-    public void refresh(){
+    private void refresh(){
+        currentItem = null;
+        editStaffButton.setDisable(true);
+        deleteStaffButton.setDisable(true);
         staffData = FXCollections.observableArrayList();
         init();
+    }
+
+    private void onAddClick(MouseEvent event){
+        window = new StaffForm();
+        try {
+            window.init();
+            refresh();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void onEditClick(MouseEvent event){
+
+    }
+
+    private void onDeleteClick(MouseEvent event){
+        Alert alert = new Alert(null, "Вы действительно хотите удалить сотрудника", ButtonType.NO, ButtonType.YES);
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get().getText().equals("Yes")){
+            int currentStaffId = currentItem.getId();
+            String sql = "DELETE FROM staff WHERE id = " + currentStaffId;
+            Database db = new Database();
+            db.update(sql);
+            refresh();
+        }
     }
 }

@@ -3,10 +3,8 @@ package javalabs.libraries;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
-
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,26 +24,20 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
-
-/**
- * Load image, provide rectangle for rubberband selection. Press right mouse button for "crop" context menu which then crops the image at the selection rectangle and saves it as jpg.
- */
 public class CropImage {
 
     RubberBandSelection rubberBandSelection;
     ImageView imageView;
     Stage cropStage;
 
-    //@Override
     public CropImage(Image image) {
         this.cropStage = new Stage();
         cropStage.setTitle("Подрезка фотографии");
         BorderPane root = new BorderPane();
-        // Контейнер для изображения
+        // Контейнер для изображениядз
         ScrollPane scrollPane = new ScrollPane();
         // Слой изображений (картинка и выделение)
         Group imageLayer = new Group();

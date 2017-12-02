@@ -22,9 +22,9 @@
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="841.0">
                               <ToolBar id="toolbar" prefHeight="38.0" prefWidth="842.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <items>
-                                  <Button fx:id="addStaffButton" mnemonicParsing="false" onMouseClicked="#addClick" text="Добавить" />
-                                  <Button fx:id="editStaffButton" disable="true" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#editClick" text="Редактировать" />
-                                  <Button fx:id="deleteStaffButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#removeClick" styleClass="delete-button" text="Удалить" />
+                                  <Button fx:id="addStaffButton" mnemonicParsing="false" text="Добавить" />
+                                  <Button fx:id="editStaffButton" disable="true" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Редактировать" />
+                                  <Button fx:id="deleteStaffButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" styleClass="delete-button" text="Удалить" />
                                 </items>
                               </ToolBar>
                               <TableView fx:id="staffTable" layoutY="38.0" prefHeight="560.0" prefWidth="800.0" styleClass="table" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
