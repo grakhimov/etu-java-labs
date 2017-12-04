@@ -29,9 +29,9 @@ import javax.imageio.ImageIO;
 
 public class CropImage {
 
-    RubberBandSelection rubberBandSelection;
-    ImageView imageView;
-    Stage cropStage;
+    private RubberBandSelection rubberBandSelection;
+    private ImageView imageView;
+    private Stage cropStage;
 
     public CropImage(Image image) {
         this.cropStage = new Stage();

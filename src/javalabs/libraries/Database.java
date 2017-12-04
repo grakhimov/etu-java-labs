@@ -2,12 +2,8 @@ package javalabs.libraries;
 
 import java.sql.*;
 import java.util.List;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import javafx.scene.image.*;
 
 public class Database {
@@ -16,7 +12,6 @@ public class Database {
     private String password = "2883455";
     private static Connection connection;
     private static Statement statement;
-    private static ResultSet result;
 
     public List<Object[]> query(String queryString) {
         List<Object[]> resultList = new ArrayList<Object[]>();
@@ -24,9 +19,9 @@ public class Database {
             // Подключение
             connection = DriverManager.getConnection(url, user, password);
             // Создание запроса
-            statement = this.connection.createStatement();
+            statement = connection.createStatement();
             // Запрос
-            result = statement.executeQuery(queryString);
+            ResultSet result = statement.executeQuery(queryString);
             // Получение метаописания результата запроса
             ResultSetMetaData rdsc = result.getMetaData();
             // Количество колонок
@@ -74,7 +69,7 @@ public class Database {
             // Подключение
             connection = DriverManager.getConnection(url, user, password);
             // Создание запроса
-            statement = this.connection.createStatement();
+            statement = connection.createStatement();
             // Выполнение запроса
             statement.executeUpdate(queryString);
             // Закрытие соединения

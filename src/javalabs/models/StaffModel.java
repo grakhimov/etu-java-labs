@@ -30,7 +30,7 @@ public class StaffModel {
     // Фотография
     private TableColumn<Staff, ImageView> photo;
     // Текущая выбранная строка таблицы
-    public Staff currentItem = null;
+    private Staff currentItem = null;
 
     /* Связанные кнопки */
     private Button addStaffButton;
