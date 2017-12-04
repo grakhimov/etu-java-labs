@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="413.0" prefWidth="719.0" stylesheets="@../assets/style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javalabs.forms.StaffForm">
+<Pane prefHeight="413.0" prefWidth="719.0" stylesheets="@../assets/style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane prefHeight="413.0" prefWidth="719.0">
          <children>
@@ -26,8 +26,8 @@
             </Pane>
             <ComboBox fx:id="division" layoutX="39.0" layoutY="101.0" prefHeight="26.0" prefWidth="171.0" promptText="Подразделение" />
             <ComboBox fx:id="position" layoutX="247.0" layoutY="101.0" prefHeight="26.0" prefWidth="171.0" promptText="Должность" />
-            <Button layoutX="486.0" layoutY="271.0" mnemonicParsing="false" onMouseClicked="#chooseFile" prefHeight="26.0" prefWidth="213.0" text="Загрузить фото" />
-            <Button fx:id="saveButton" layoutX="563.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#saveForm" prefHeight="44.0" prefWidth="126.0" text="Сохранить">
+            <Button fx:id="uploadPhoto" layoutX="486.0" layoutY="271.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="213.0" text="Загрузить фото" />
+            <Button fx:id="saveButton" layoutX="563.0" layoutY="346.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="126.0" text="Сохранить">
                <font>
                   <Font size="15.0" />
                </font>

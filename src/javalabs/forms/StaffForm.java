@@ -2,7 +2,6 @@ package javalabs.forms;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,23 +11,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.image.*;
-
 import java.io.File;
 import java.sql.Blob;
-import java.sql.Ref;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.function.Function;
-
 import javalabs.classes.Staff;
 import javalabs.libraries.Database;
 import javalabs.libraries.Images;
 import javalabs.libraries.CropImage;
 import javalabs.models.StaffModel;
-import javalabs.models.StaffModel.*;
-
-import javax.naming.Context;
 
 
 public class StaffForm{
@@ -37,33 +28,26 @@ public class StaffForm{
 
     private HashMap<String, Integer> positionMap = new HashMap< String, Integer>();
 
-    private StaffModel context;
+    private StaffModel staffTable;
 
-    @FXML
     private ImageView photo;
 
-    @FXML
     private TextField firstname;
 
-    @FXML
     private TextField lastname;
 
-    @FXML
     private ComboBox division;
 
-    @FXML
     private ComboBox position;
 
-    @FXML
     private Button saveButton;
 
-    @FXML
-    private void initialize() {
-        putDivisions();
-        putPositions();
+    private Button uploadPhoto;
+
+    public StaffForm(StaffModel parentContext){
+        this.staffTable = parentContext;
     }
 
-    @FXML
     private void chooseFile(){
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPEG files", "*.jpg", "*.jpeg", "*.JPG", "*.JPEG");
@@ -75,19 +59,23 @@ public class StaffForm{
         photo.setImage(cropped.getImageView());
     }
 
-    @FXML
-    private void saveForm() throws Exception{
+    private void saveForm(){
         Stage stage = (Stage) saveButton.getScene().getWindow();
         String firstName = firstname.getText();
         String lastName = lastname.getText();
         int divisionId = divisionMap.get((String) division.getValue());
         int positionId = positionMap.get((String) position.getValue());
-        Blob photoStream = Images.imageToMysqlBlob(photo);
-        Staff.create(firstName, lastName, divisionId, positionId, photoStream);
+        try {
+            Blob photoStream = Images.imageToMysqlBlob(photo);
+            Staff.create(firstName, lastName, divisionId, positionId, photoStream);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        staffTable.refresh();
         stage.close();
     }
 
-
+    @SuppressWarnings("unchecked")
     public void init() throws Exception{
         Parent rooter = FXMLLoader.load(getClass().getResource("staffform.fxml"));
         Stage stage = new Stage();
@@ -96,7 +84,23 @@ public class StaffForm{
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Добавление сотрудника");
-        stage.showAndWait();
+        firstname   = (TextField)   scene.lookup("#firstname");
+        lastname    = (TextField)   scene.lookup("#lastname");
+        division    = (ComboBox)    scene.lookup("#division");
+        position    = (ComboBox)    scene.lookup("#position");
+        photo       = (ImageView)   scene.lookup("#photo");
+        uploadPhoto = (Button)      scene.lookup("#uploadPhoto");
+        saveButton  = (Button)      scene.lookup("#saveButton");
+        // Обработчики
+        uploadPhoto.setOnMouseClicked(event -> {
+            chooseFile();
+        });
+        saveButton.setOnMouseClicked(event -> {
+            saveForm();
+        });
+        putDivisions();
+        putPositions();
+        stage.show();
     }
 
     @SuppressWarnings("unchecked")
@@ -124,5 +128,4 @@ public class StaffForm{
         }
         position.setItems(positionsData);
     }
-
 }

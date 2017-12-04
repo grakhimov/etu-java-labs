@@ -74,8 +74,6 @@ public class CropImage {
             public void handle(ActionEvent e) {
                 // Выделенная область
                 Bounds selectionBounds = rubberBandSelection.getBounds();
-                // Отладочный лог
-                System.out.println( "Selected area: " + selectionBounds);
                 // Обрезка
                 crop(selectionBounds);
 
@@ -83,8 +81,7 @@ public class CropImage {
         });
         // Добавляем пункт в контекстное меню
         contextMenu.getItems().add(cropMenuItem);
-
-        // set context menu on image layer
+        // Обработчик контекстного меню
         imageLayer.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

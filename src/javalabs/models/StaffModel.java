@@ -1,7 +1,6 @@
 package javalabs.models;
 
 import javalabs.forms.StaffForm;
-
 import javafx.scene.control.*;
 import javalabs.classes.Staff;
 import javalabs.libraries.Database;
@@ -12,9 +11,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
-import jdk.nashorn.internal.objects.annotations.Function;
-
-import javax.naming.Context;
 
 
 public class StaffModel {
@@ -34,9 +30,7 @@ public class StaffModel {
     // Фотография
     private TableColumn<Staff, ImageView> photo;
     // Текущая выбранная строка таблицы
-    private Staff currentItem = null;
-    // Окно создания и редактирования сотрудника
-    private StaffForm window;
+    public Staff currentItem = null;
 
     /* Связанные кнопки */
     private Button addStaffButton;
@@ -59,6 +53,14 @@ public class StaffModel {
         addStaffButton.setOnMouseClicked(this::onAddClick);
         editStaffButton.setOnMouseClicked(this::onEditClick);
         deleteStaffButton.setOnMouseClicked(this::onDeleteClick);
+        staffTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (staffTable.getSelectionModel().getSelectedItem() != null) {
+                // Текущая выбранная строка таблицы
+                currentItem = staffTable.getSelectionModel().getSelectedItem();
+                editStaffButton.setDisable(false);
+                deleteStaffButton.setDisable(false);
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -75,8 +77,6 @@ public class StaffModel {
         this.position       = (TableColumn<Staff, String>) staffTable.getColumns().get(3);
         this.cardNumber     = (TableColumn<Staff, String>) staffTable.getColumns().get(4);
         this.photo          = (TableColumn<Staff, ImageView>) staffTable.getColumns().get(5);
-        // Обработчик выбора строки таблицы
-        this.staffTable.setOnMouseClicked(this::onSelectRow);
         init(); // Инициализация
     }
 
@@ -99,15 +99,7 @@ public class StaffModel {
         }
     }
 
-    private void onSelectRow(MouseEvent event){
-        currentItem = staffTable.getSelectionModel().getSelectedItem();
-        if(currentItem != null){
-            editStaffButton.setDisable(false);
-            deleteStaffButton.setDisable(false);
-        }
-    }
-
-    private void refresh(){
+    public void refresh(){
         currentItem = null;
         editStaffButton.setDisable(true);
         deleteStaffButton.setDisable(true);
@@ -116,7 +108,7 @@ public class StaffModel {
     }
 
     private void onAddClick(MouseEvent event){
-        window = new StaffForm();
+        StaffForm window = new StaffForm(this);
         try {
             window.init();
             refresh();
@@ -126,13 +118,22 @@ public class StaffModel {
     }
 
     private void onEditClick(MouseEvent event){
+        StaffForm window = new StaffForm(this);
+        try {
 
+            window.init();
+            refresh();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void onDeleteClick(MouseEvent event){
-        Alert alert = new Alert(null, "Вы действительно хотите удалить сотрудника", ButtonType.NO, ButtonType.YES);
+        ButtonType no = new ButtonType("Отмена", ButtonBar.ButtonData.NO);
+        ButtonType yes = new ButtonType("Удалить", ButtonBar.ButtonData.YES);
+        Alert alert = new Alert(null, "Вы действительно хотите удалить сотрудника", no, yes);
         Optional<ButtonType> result = alert.showAndWait();
-        if(result.get().getText().equals("Yes")){
+        if(result.get().getText().equals("Удалить")){
             int currentStaffId = currentItem.getId();
             String sql = "DELETE FROM staff WHERE id = " + currentStaffId;
             Database db = new Database();
