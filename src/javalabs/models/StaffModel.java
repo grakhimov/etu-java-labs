@@ -111,7 +111,6 @@ public class StaffModel {
         StaffForm window = new StaffForm(this);
         try {
             window.init();
-            refresh();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -120,9 +119,7 @@ public class StaffModel {
     private void onEditClick(MouseEvent event){
         StaffForm window = new StaffForm(this);
         try {
-
             window.init();
-            refresh();
         } catch (Exception e){
             e.printStackTrace();
         }
