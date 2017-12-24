@@ -44,8 +44,14 @@ public class StaffForm{
 
     private Button uploadPhoto;
 
-    public StaffForm(StaffModel parentContext){
+    private Staff currentStaff;
+
+    private boolean isEdit;
+
+    public StaffForm(StaffModel parentContext, boolean editmode){
+        this.isEdit = editmode;
         this.staffTable = parentContext;
+        this.currentStaff = parentContext.getCurrentItem();
     }
 
     private void chooseFile(){
@@ -63,11 +69,29 @@ public class StaffForm{
         Stage stage = (Stage) saveButton.getScene().getWindow();
         String firstName = firstname.getText();
         String lastName = lastname.getText();
-        int divisionId = divisionMap.get((String) division.getValue());
-        int positionId = positionMap.get((String) position.getValue());
+        int divisionId;
+        try {
+            divisionId = divisionMap.get((String) division.getValue());
+        } catch (Exception e){
+            divisionId = -1;
+        }
+        int positionId;
+        try {
+            positionId = positionMap.get((String) position.getValue());
+        } catch (Exception e){
+            positionId = -1;
+        }
+        String formErrors = validateForm(firstName, lastName, divisionId, positionId);
+        if(formErrors.length() > 0){
+            Alert alert = new Alert(Alert.AlertType.ERROR, formErrors, ButtonType.CLOSE);
+            alert.showAndWait();
+            return;
+        }
         try {
             Blob photoStream = Images.imageToMysqlBlob(photo);
-            Staff.create(firstName, lastName, divisionId, positionId, photoStream);
+            if(!isEdit) {
+                Staff.create(firstName, lastName, divisionId, positionId, photoStream);
+            } else Staff.update(currentStaff.getId(), firstName, lastName, divisionId, positionId, photoStream);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -83,7 +107,7 @@ public class StaffForm{
         Scene scene = new Scene(rooter);
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setTitle("Добавление сотрудника");
+        stage.setTitle(isEdit ? "Редактирование сотрудника" : "Добавление сотрудника");
         firstname   = (TextField)   scene.lookup("#firstname");
         lastname    = (TextField)   scene.lookup("#lastname");
         division    = (ComboBox)    scene.lookup("#division");
@@ -100,7 +124,31 @@ public class StaffForm{
         });
         putDivisions();
         putPositions();
+        if(isEdit && currentStaff != null){
+            firstname.setText(currentStaff.getFirstName());
+            lastname.setText(currentStaff.getLastName());
+            division.setValue(currentStaff.getDivision());
+            position.setValue(currentStaff.getPosition());
+            photo.setImage(currentStaff.getPhoto().getImage());
+        }
         stage.show();
+    }
+
+    private String validateForm(String firstName, String lastName, Integer divisionId, Integer positionId){
+        String errors = "";
+        if(firstName.length() == 0){
+            errors += "Не указано имя сотрудника!\n";
+        }
+        if(lastName.length() == 0){
+            errors += "Не указана фамилия сотрудника!\n";
+        }
+        if(divisionId == -1){
+            errors += "Не указано подразделение!\n";
+        }
+        if(positionId == -1){
+            errors += "Не указана должность!\n";
+        }
+        return errors;
     }
 
     @SuppressWarnings("unchecked")

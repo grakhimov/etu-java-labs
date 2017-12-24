@@ -1,9 +1,6 @@
 package javalabs.classes;
 
 import javafx.scene.image.ImageView;
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
@@ -47,6 +44,25 @@ public class Staff extends User{
         ps.setInt(3, divisionId);
         ps.setInt(4, positionId);
         ps.setBlob(5, inputStream);
+        if(ps.executeUpdate() > 0){
+            connect.close();
+            return 1;
+        }
+        connect.close();
+        return 0;
+    }
+
+    public static int update(int id, String firstName, String lastName, Integer divisionId, Integer positionId, Blob photo) throws Exception{
+        InputStream inputStream = photo.getBinaryStream();
+        String sql = "UPDATE staff SET firstname = ?, lastname = ?, division_id = ?, position_id = ?, photo = ? WHERE id = ?";
+        Connection connect = new Database().unsafeGetConnection();
+        PreparedStatement ps = connect.prepareStatement(sql);
+        ps.setString(1, firstName);
+        ps.setString(2, lastName);
+        ps.setInt(3, divisionId);
+        ps.setInt(4, positionId);
+        ps.setBlob(5, inputStream);
+        ps.setInt(6, id);
         if(ps.executeUpdate() > 0){
             connect.close();
             return 1;

@@ -31,11 +31,14 @@ public class StaffModel {
     private TableColumn<Staff, ImageView> photo;
     // Текущая выбранная строка таблицы
     private Staff currentItem = null;
-
     /* Связанные кнопки */
     private Button addStaffButton;
     private Button editStaffButton;
     private Button deleteStaffButton;
+
+    public Staff getCurrentItem() {
+        return currentItem;
+    }
 
     // Инициализация
     private void init() {
@@ -108,7 +111,7 @@ public class StaffModel {
     }
 
     private void onAddClick(MouseEvent event){
-        StaffForm window = new StaffForm(this);
+        StaffForm window = new StaffForm(this, false);
         try {
             window.init();
         } catch (Exception e){
@@ -117,7 +120,7 @@ public class StaffModel {
     }
 
     private void onEditClick(MouseEvent event){
-        StaffForm window = new StaffForm(this);
+        StaffForm window = new StaffForm(this, true);
         try {
             window.init();
         } catch (Exception e){
