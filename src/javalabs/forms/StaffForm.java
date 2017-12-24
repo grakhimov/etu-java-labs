@@ -28,7 +28,7 @@ public class StaffForm{
 
     private HashMap<String, Integer> positionMap = new HashMap< String, Integer>();
 
-    private StaffModel staffTable;
+    private StaffModel staffModel;
 
     private ImageView photo;
 
@@ -50,7 +50,7 @@ public class StaffForm{
 
     public StaffForm(StaffModel parentContext, boolean editmode){
         this.isEdit = editmode;
-        this.staffTable = parentContext;
+        this.staffModel = parentContext;
         this.currentStaff = parentContext.getCurrentItem();
     }
 
@@ -95,7 +95,7 @@ public class StaffForm{
         } catch (Exception e){
             e.printStackTrace();
         }
-        staffTable.refresh();
+        staffModel.refresh();
         stage.close();
     }
 

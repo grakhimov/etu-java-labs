@@ -134,11 +134,12 @@ public class StaffModel {
         Alert alert = new Alert(null, "Вы действительно хотите удалить сотрудника", no, yes);
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get().getText().equals("Удалить")){
-            int currentStaffId = currentItem.getId();
-            String sql = "DELETE FROM staff WHERE id = " + currentStaffId;
-            Database db = new Database();
-            db.update(sql);
-            refresh();
+            if(Staff.delete(currentItem.getId()) == 0){
+                refresh();
+                return;
+            }
+            Alert delError = new Alert(null, "Что-то пошло не так...", ButtonType.CLOSE);
+            delError.showAndWait();
         }
     }
 }

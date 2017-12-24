@@ -71,4 +71,16 @@ public class Staff extends User{
         return 0;
     }
 
+    public static int delete(int id){
+        String sql = "DELETE FROM staff WHERE id = " + id;
+        Database db = new Database();
+        try{
+            db.update(sql);
+            return 0;
+        } catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 }
