@@ -7,94 +7,162 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <TabPane side="LEFT" stylesheets="@../assets/style.css" tabMinHeight="40.0" tabMinWidth="30.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javalabs.forms.MainWindowController">
-   <tabs>
-      <Tab closable="false" style="-fx-border-color: #bbb;" styleClass="left-tab">
-         <content>
-            <TabPane>
-               <tabs>
-                   <Tab closable="false" text="Сотрудники">
-                       <content>
-                       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="800.0">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="841.0">
-                              <ToolBar id="toolbar" prefHeight="38.0" prefWidth="842.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <items>
-                                  <Button fx:id="addStaffButton" mnemonicParsing="false" text="Добавить" />
-                                  <Button fx:id="editStaffButton" disable="true" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Редактировать" />
-                                  <Button fx:id="deleteStaffButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" styleClass="delete-button" text="Удалить" />
-                                </items>
-                              </ToolBar>
-                              <TableView fx:id="staffTable" layoutY="38.0" prefHeight="560.0" prefWidth="800.0" styleClass="table" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
-                                <columns>
-                                  <TableColumn id="firstName" fx:id="firstName" prefWidth="118.0" styleClass="table-header" text="Имя" />
-                                  <TableColumn id="lastName" fx:id="lastName" prefWidth="151.0" styleClass="table-header" text="Фамилия" />
-                                  <TableColumn id="division" fx:id="division" prefWidth="167.0" styleClass="table-header" text="Подразделение" />
-                                  <TableColumn id="position" fx:id="position" minWidth="0.0" prefWidth="122.0" styleClass="table-header" text="Должность" />
-                                  <TableColumn id="cardNumber" fx:id="cardNumber" prefWidth="110.0" styleClass="table-header" text="№ карты" />
-                                  <TableColumn id="photo" fx:id="photo" prefWidth="116.0" styleClass="table-header" text="Фото" />
-                                </columns>
-                              </TableView>
-                              </AnchorPane>
-                           </content>
-                        </ScrollPane>
-                       </content>
-                  </Tab>
-                  <Tab closable="false" text="Подразделения">
-                      <content>
-                          <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
-                              <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="841.0">
-                                      <children>
-                                          <ToolBar prefHeight="40.0" prefWidth="842.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                              <items>
-                                                  <Button fx:id="addDivisionButton" mnemonicParsing="false" text="Добавить" />
-                                                  <Button fx:id="editDivisionButton" disable="true" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Редактировать" />
-                                                  <Button fx:id="deleteDivisionButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" styleClass="delete-button" text="Удалить" />
-                                              </items>
-                                          </ToolBar>
-                                              <TableView fx:id="divisionTable" layoutY="38.0" prefHeight="560.0" prefWidth="800.0" styleClass="table" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
-                                                  <columns>
-                                                      <TableColumn id="divisionName" fx:id="divisionName" prefWidth="218.0" styleClass="table-header" text="Подразделение" />
-                                                      <TableColumn id="divisionDesc" fx:id="divisionDesc" prefWidth="351.0" styleClass="table-header" text="Описание" />
-                                                  </columns>
-                                              </TableView>
-                                      </children>
-                                  </AnchorPane>
-                              </content>
-                          </ScrollPane>
-                      </content>
-                  </Tab>
-                  <Tab closable="false" text="Должности">
-                     <content>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="841.0">
-                                 <children>
-                                    <ToolBar prefHeight="40.0" prefWidth="842.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <items>
-                                        <Button mnemonicParsing="false" text="Button" />
-                                      </items>
-                                    </ToolBar>
-                                    <TableView layoutY="40.0" prefHeight="548.0" prefWidth="842.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
-                                      <columns>
-                                        <TableColumn minWidth="150.0" prefWidth="75.0" styleClass="table-header" text="Должность" />
-                                        <TableColumn prefWidth="150.0" styleClass="table-header" text="Описание" />
-                                      </columns>
-                                    </TableView>
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </ScrollPane>
-                     </content>
-                  </Tab>
-               </tabs>
-            </TabPane>
-         </content>
-      </Tab>
-      <Tab closable="false" style="-fx-border-color: #bbb;" styleClass="left-tab" />
-      <Tab closable="false" style="-fx-border-color: #bbb;" styleClass="left-tab" />
-   </tabs>
+    <tabs>
+        <Tab closable="false" style="-fx-border-color: #bbb;" styleClass="left-tab">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@../assets/avatar.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+            <content>
+                <TabPane>
+                    <tabs>
+                        <Tab closable="false" text="Сотрудники">
+                            <content>
+                                <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="600.0" prefWidth="800.0">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="841.0">
+                                            <ToolBar id="toolbar" prefHeight="38.0" prefWidth="842.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <items>
+                                                    <Button fx:id="addStaffButton" mnemonicParsing="false" text="Добавить" />
+                                                    <Button fx:id="editStaffButton" disable="true" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Редактировать" />
+                                                    <Button fx:id="deleteStaffButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" styleClass="delete-button" text="Удалить" />
+                                                </items>
+                                            </ToolBar>
+                                            <TableView fx:id="staffTable" layoutY="38.0" prefHeight="560.0" prefWidth="800.0" styleClass="table" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                                <columns>
+                                                    <TableColumn id="firstName" fx:id="firstName" prefWidth="118.0" styleClass="table-header" text="Имя" />
+                                                    <TableColumn id="lastName" fx:id="lastName" prefWidth="151.0" styleClass="table-header" text="Фамилия" />
+                                                    <TableColumn id="division" fx:id="division" prefWidth="167.0" styleClass="table-header" text="Подразделение" />
+                                                    <TableColumn id="position" fx:id="position" minWidth="0.0" prefWidth="122.0" styleClass="table-header" text="Должность" />
+                                                    <TableColumn id="cardNumber" fx:id="cardNumber" prefWidth="110.0" styleClass="table-header" text="№ карты" />
+                                                    <TableColumn id="photo" fx:id="photo" prefWidth="116.0" styleClass="table-header" text="Фото" />
+                                                </columns>
+                                            </TableView>
+                                        </AnchorPane>
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab closable="false" text="Подразделения">
+                            <content>
+                                <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="841.0">
+                                            <children>
+                                                <ToolBar prefHeight="40.0" prefWidth="842.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                    <items>
+                                                        <Button fx:id="addDivisionButton" mnemonicParsing="false" text="Добавить" />
+                                                        <Button fx:id="editDivisionButton" disable="true" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Редактировать" />
+                                                        <Button fx:id="deleteDivisionButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" styleClass="delete-button" text="Удалить" />
+                                                    </items>
+                                                </ToolBar>
+                                                <TableView fx:id="divisionTable" layoutY="38.0" prefHeight="560.0" prefWidth="800.0" styleClass="table" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                                    <columns>
+                                                        <TableColumn id="divisionName" fx:id="divisionName" prefWidth="218.0" styleClass="table-header" text="Подразделение" />
+                                                        <TableColumn id="divisionDesc" fx:id="divisionDesc" prefWidth="351.0" styleClass="table-header" text="Описание" />
+                                                    </columns>
+                                                </TableView>
+                                            </children>
+                                        </AnchorPane>
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab closable="false" text="Должности">
+                            <content>
+                                <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="841.0">
+                                            <children>
+                                                <ToolBar prefHeight="40.0" prefWidth="842.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                    <items>
+                                                        <Button fx:id="addPositionButton" mnemonicParsing="false" text="Добавить" />
+                                                        <Button fx:id="editPositionButton" disable="true" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Редактировать" />
+                                                        <Button fx:id="deletePositionButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" styleClass="delete-button" text="Удалить" />
+                                                    </items>
+                                                </ToolBar>
+                                                <TableView fx:id="positionTable" layoutY="40.0" prefHeight="548.0" prefWidth="842.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                                    <columns>
+                                                        <TableColumn id="positionName" fx:id="positionName" minWidth="150.0" prefWidth="75.0" styleClass="table-header" text="Должность" />
+                                                        <TableColumn id="positionDesc" fx:id="positionDesc" prefWidth="150.0" styleClass="table-header" text="Описание" />
+                                                    </columns>
+                                                </TableView>
+                                            </children>
+                                        </AnchorPane>
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </content>
+        </Tab>
+        <Tab closable="false" style="-fx-border-color: #bbb;" styleClass="left-tab">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@../assets/id-card.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+            <content>
+                <TabPane>
+                    <tabs>
+                        <Tab closable="false" text="Карты">
+                            <content>
+                                <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="841.0">
+                                            <children>
+                                                <ToolBar prefHeight="40.0" prefWidth="842.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                    <items>
+                                                        <Button fx:id="addCardButton" mnemonicParsing="false" text="Добавить" />
+                                                        <Button fx:id="editCardButton" disable="true" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Редактировать" />
+                                                        <Button fx:id="deleteCardButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" styleClass="delete-button" text="Удалить" />
+                                                        <Button fx:id="toggleCardButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" styleClass="delete-button" text="Активировать/Деактивировать" />
+                                                        <Button fx:id="unlinkButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" styleClass="delete-button" text="Отвязать" />
+                                                    </items>
+                                                </ToolBar>
+                                                <TableView fx:id="cardTable" layoutY="40.0" prefHeight="548.0" prefWidth="842.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                                    <columns>
+                                                        <TableColumn id="isActive" fx:id="isActive" prefWidth="150.0" styleClass="table-header" text="Состояние" />
+                                                        <TableColumn id="card" fx:id="card" minWidth="150.0" prefWidth="75.0" styleClass="table-header" text="Карта" />
+                                                        <TableColumn id="cardHolderName" fx:id="cardHolderName" minWidth="150.0" prefWidth="75.0" styleClass="table-header" text="Держатель" />
+                                                    </columns>
+                                                </TableView>
+                                            </children>
+                                        </AnchorPane>
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </content>
+        </Tab>
+        <Tab closable="false" style="-fx-border-color: #bbb;" styleClass="left-tab">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@../assets/settings.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+            <content>
+                <TabPane>
+                    <tabs>
+                        <Tab closable="false" text="Настройки" />
+                    </tabs>
+                </TabPane>
+            </content>
+        </Tab>
+    </tabs>
 </TabPane>

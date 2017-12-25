@@ -1,17 +1,38 @@
 package javalabs.libraries;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.InputStream;
+import java.util.Properties;
+
 import javafx.scene.image.*;
 
 public class Database {
-    private String url = "jdbc:mysql://localhost:3306/javalabs?autoReconnect=true&useSSL=false&characterEncoding=utf-8";
-    private String user = "root";
-    private String password = "2883455";
+    private String url;
+    private String user;
+    private String password;
     private static Connection connection;
     private static Statement statement;
+
+    public Database(){
+        Properties p = new Properties();
+        InputStream is = null;
+        try {
+            File f = new File("src/javalabs/config.properties");
+            is = new FileInputStream( f );
+            p.load(is);
+            this.url = "jdbc:mysql://" + p.getProperty("host") + ":" + p.getProperty("port") + "/" + p.getProperty("dbname") + "?autoReconnect=true&useSSL=false&characterEncoding=utf-8";
+            this.user = p.getProperty("user");
+            this.password = p.getProperty("password");
+        }
+        catch ( Exception e ) { is = null; }
+    }
 
     public List<Object[]> query(String queryString) {
         List<Object[]> resultList = new ArrayList<Object[]>();
@@ -45,11 +66,13 @@ public class Database {
                             break;
                         case "MEDIUMBLOB": // Для фоток
                             Blob imageBlob = result.getBlob(columnNames[i]);
-                            InputStream is = imageBlob.getBinaryStream();
-                            Image image = new Image(is, 80, 0, true, true);
-                            ImageView render = new ImageView();
-                            render.setImage(image);
-                            fieldsArray[i] = render;
+                            if(imageBlob != null) {
+                                InputStream is = imageBlob.getBinaryStream();
+                                Image image = new Image(is, 80, 0, true, true);
+                                ImageView render = new ImageView();
+                                render.setImage(image);
+                                fieldsArray[i] = render;
+                            }
                             break;
                         default: // По-умолчанию всё строки
                             fieldsArray[i] = result.getString(columnNames[i]);

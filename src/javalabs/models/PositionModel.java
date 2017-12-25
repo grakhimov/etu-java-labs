@@ -6,32 +6,31 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
-import javalabs.classes.Division;
+import javalabs.classes.Position;
 import javalabs.forms.WorkspaceForm;
 import javalabs.libraries.Database;
 
 import java.util.List;
 import java.util.Optional;
 
-
-public class DivisionModel extends Model{
-    private ObservableList<Division> divisionData = FXCollections.observableArrayList();
-    private TableView<Division> divisionTable;
-    private TableColumn<Division, String> divisionName;
-    private TableColumn<Division, String> divisionDesc;
-    private Division currentItem = null;
+public class PositionModel extends Model{
+    private ObservableList<Position> positionData = FXCollections.observableArrayList();
+    private TableView<Position> positionTable;
+    private TableColumn<Position, String> positionName;
+    private TableColumn<Position, String> positionDesc;
+    private Position currentItem = null;
     /* Связанные кнопки */
     private Button addButton;
     private Button editButton;
     private Button deleteButton;
 
-    public Division getCurrentItem() {
+    public Position getCurrentItem() {
         return currentItem;
     }
 
     @SuppressWarnings("unchecked")
-    public DivisionModel(
-            TableView<Division> divisionTable,
+    public PositionModel(
+            TableView<Position> positionTable,
             Button addButton,
             Button editButton,
             Button deleteButton){
@@ -39,9 +38,9 @@ public class DivisionModel extends Model{
         this.editButton = editButton;
         this.deleteButton = deleteButton;
         // Получение объекта таблицы из корневого контроллера и выборка столбцов
-        this.divisionTable  = divisionTable;
-        this.divisionName   = (TableColumn<Division, String>) divisionTable.getColumns().get(0);
-        this.divisionDesc   = (TableColumn<Division, String>) divisionTable.getColumns().get(1);
+        this.positionTable  = positionTable;
+        this.positionName   = (TableColumn<Position, String>) positionTable.getColumns().get(0);
+        this.positionDesc   = (TableColumn<Position, String>) positionTable.getColumns().get(1);
         init();
     }
 
@@ -50,23 +49,23 @@ public class DivisionModel extends Model{
         // Получение данных из базы
         initData();
         // Установка типов содержимого столбцов
-        divisionName.setCellValueFactory(new PropertyValueFactory<Division, String>("name"));
-        divisionDesc.setCellValueFactory(new PropertyValueFactory<Division, String>("desc"));
-        divisionTable.setItems(divisionData);
+        positionName.setCellValueFactory(new PropertyValueFactory<Position, String>("name"));
+        positionDesc.setCellValueFactory(new PropertyValueFactory<Position, String>("desc"));
+        positionTable.setItems(positionData);
         // Обработчики событий
         addButton.setOnMouseClicked(this::onAddClick);
         editButton.setOnMouseClicked(this::onEditClick);
         deleteButton.setOnMouseClicked(this::onDeleteClick);
-        divisionTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (divisionTable.getSelectionModel().getSelectedItem() != null) {
+        positionTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (positionTable.getSelectionModel().getSelectedItem() != null) {
                 // Текущая выбранная строка таблицы
-                currentItem = divisionTable.getSelectionModel().getSelectedItem();
+                currentItem = positionTable.getSelectionModel().getSelectedItem();
                 editButton.setDisable(false);
                 deleteButton.setDisable(false);
             }
         });
-        divisionTable.setRowFactory( tv -> {
-            TableRow<Division> row = new TableRow<>();
+        positionTable.setRowFactory( tv -> {
+            TableRow<Position> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                     onEditClick(null);
@@ -82,14 +81,14 @@ public class DivisionModel extends Model{
         // Получение данных из базы
         Database example = new Database();
         List<Object[]> result = example.query(
-                "SELECT id, division_name, description FROM divisions"
+                "SELECT id, position_name, description FROM positions"
         );
         int size = result.size();
         for(int i = 0; i < size; i++){
             // Заполнение строк таблицы
             Object[] row = result.get(i);
-            Division division = new Division((Integer) row[0], (String) row[1], (String) row[2]);
-            divisionData.add(division);
+            Position position = new Position((Integer) row[0], (String) row[1], (String) row[2]);
+            positionData.add(position);
         }
     }
 
@@ -98,26 +97,26 @@ public class DivisionModel extends Model{
         currentItem = null;
         editButton.setDisable(true);
         deleteButton.setDisable(true);
-        divisionData = FXCollections.observableArrayList();
+        positionData = FXCollections.observableArrayList();
         init();
     }
 
     @Override
     public int save(int id, String name, String desc){
         if(name.length() == 0){
-            Alert nameFound = new Alert(null, "Не указано название подразделения", ButtonType.CLOSE);
+            Alert nameFound = new Alert(null, "Не указано название должности", ButtonType.CLOSE);
             nameFound.showAndWait();
             return -1;
         }
-        int ids = Division.isUnique(name);
+        int ids = Position.isUnique(name);
         if(ids > 0 && ids != id){
-            Alert unique = new Alert(null, "Подразделение с таким названием уже существует", ButtonType.CLOSE);
+            Alert unique = new Alert(null, "Должность с таким названием уже существует", ButtonType.CLOSE);
             unique.showAndWait();
             return -1;
-        }
+                }
         if(id == 0){
             try {
-                Division.create(name, desc);
+                Position.create(name, desc);
                 return 0;
             } catch(Exception e){
                 e.printStackTrace();
@@ -125,7 +124,7 @@ public class DivisionModel extends Model{
             }
         }
         try {
-            Division.update(id, name, desc);
+            Position.update(id, name, desc);
             return 0;
         } catch (Exception e){
             e.printStackTrace();
@@ -150,9 +149,9 @@ public class DivisionModel extends Model{
         }
     }
     private void onDeleteClick(MouseEvent event){
-        String use = Division.checkUse(currentItem.getId());
+        String use = Position.checkUse(currentItem.getId());
         if(use.length() > 0){
-            String error = "Подразделение не может быть удалено так как в нем числятся сотрудники: \n" + use;
+            String error = "Должность не может быть удалена так как используется сотрудниками: \n" + use;
             Alert inuse = new Alert(null, error, ButtonType.CLOSE);
             inuse.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             inuse.showAndWait();
@@ -160,10 +159,10 @@ public class DivisionModel extends Model{
         }
         ButtonType no = new ButtonType("Отмена", ButtonBar.ButtonData.NO);
         ButtonType yes = new ButtonType("Удалить", ButtonBar.ButtonData.YES);
-        Alert alert = new Alert(null, "Вы действительно хотите удалить подразделение", no, yes);
+        Alert alert = new Alert(null, "Вы действительно хотите удалить должность", no, yes);
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get().getText().equals("Удалить")){
-            Division.delete(currentItem.getId());
+            Position.delete(currentItem.getId());
             refresh();
         }
     }

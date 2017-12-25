@@ -80,19 +80,30 @@ public class StaffModel {
         this.position       = (TableColumn<Staff, String>) staffTable.getColumns().get(3);
         this.cardNumber     = (TableColumn<Staff, String>) staffTable.getColumns().get(4);
         this.photo          = (TableColumn<Staff, ImageView>) staffTable.getColumns().get(5);
+        staffTable.setRowFactory( tv -> {
+            TableRow<Staff> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    onEditClick(null);
+                    //Staff rowData = row.getItem();
+                    //System.out.println(rowData);
+                }
+            });
+            return row;
+        });
         init(); // Инициализация
     }
 
     private void initData() {
         // Получение данных из базы
         Database example = new Database();
-        List<Object[]> result = example.query(
-                "SELECT  staff.id, firstname, lastname, division_name, position_name, card_number, photo from staff\n" +
-                        "  LEFT JOIN divisions\n" +
-                        "  ON staff.division_id = divisions.id\n" +
-                        "  LEFT JOIN positions\n" +
-                        "  ON staff.position_id = positions.id"
-        );
+        String sql = "SELECT  staff.id, firstname, lastname, division_name, position_name, card_number, photo from staff\n" +
+                "  LEFT JOIN divisions\n" +
+                "  ON staff.division_id = divisions.id\n" +
+                "  LEFT JOIN positions\n" +
+                "  ON staff.position_id = positions.id" +
+                "  LEFT JOIN cards ON cards.staff_id = staff.id";
+        List<Object[]> result = example.query(sql);
         int size = result.size();
         for(int i = 0; i < size; i++){
             // Заполнение строк таблицы

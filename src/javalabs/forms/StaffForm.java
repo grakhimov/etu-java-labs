@@ -36,6 +36,10 @@ public class StaffForm{
 
     private TextField lastname;
 
+    private TextField cardNumber;
+
+    private ToggleButton activate;
+
     private ComboBox division;
 
     private ComboBox position;
@@ -43,6 +47,8 @@ public class StaffForm{
     private Button saveButton;
 
     private Button uploadPhoto;
+
+    private Button addCardButton;
 
     private Staff currentStaff;
 
@@ -110,6 +116,9 @@ public class StaffForm{
         stage.setTitle(isEdit ? "Редактирование сотрудника" : "Добавление сотрудника");
         firstname   = (TextField)   scene.lookup("#firstname");
         lastname    = (TextField)   scene.lookup("#lastname");
+        cardNumber  = (TextField)   scene.lookup("#cardNumber");
+        activate  =   (ToggleButton)scene.lookup("#activate");
+        addCardButton = (Button) scene.lookup("#add");
         division    = (ComboBox)    scene.lookup("#division");
         position    = (ComboBox)    scene.lookup("#position");
         photo       = (ImageView)   scene.lookup("#photo");
@@ -122,16 +131,25 @@ public class StaffForm{
         saveButton.setOnMouseClicked(event -> {
             saveForm();
         });
+        addCardButton.setOnMouseClicked(event -> {
+            try {openCardList();} catch(Exception e){}
+        });
         putDivisions();
         putPositions();
         if(isEdit && currentStaff != null){
             firstname.setText(currentStaff.getFirstName());
             lastname.setText(currentStaff.getLastName());
+            cardNumber.setText(currentStaff.getCardNumber());
             division.setValue(currentStaff.getDivision());
             position.setValue(currentStaff.getPosition());
             photo.setImage(currentStaff.getPhoto().getImage());
         }
         stage.show();
+    }
+
+    private void openCardList() throws Exception{
+        CardList cards = new CardList();
+        cards.init();
     }
 
     private String validateForm(String firstName, String lastName, Integer divisionId, Integer positionId){

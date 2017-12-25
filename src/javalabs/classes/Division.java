@@ -39,6 +39,18 @@ public class Division extends Workspace{
         return 0;
     }
 
+    public static int isUnique(String name){
+        Database example = new Database();
+        List<Object[]> result = example.query(
+                "SELECT id FROM divisions WHERE division_name = '" + name + "'"
+        );
+        if(result.size() > 0){
+            Object[] row = result.get(0);
+            return (int)row[0];
+        }
+        return 0;
+    }
+
     public static String checkUse(int id){
         Database example = new Database();
         List<Object[]> result = example.query(

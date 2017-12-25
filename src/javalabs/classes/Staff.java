@@ -35,7 +35,7 @@ public class Staff extends User{
     }
 
     public static int create(String firstName, String lastName, Integer divisionId, Integer positionId, Blob photo) throws Exception{
-        InputStream inputStream = photo.getBinaryStream();
+        InputStream inputStream = photo != null ? photo.getBinaryStream() : null;
         String sql = "INSERT INTO staff (firstname, lastname, division_id, position_id, photo) values (?, ?, ?, ?, ?)";
         Connection connect = new Database().unsafeGetConnection();
         PreparedStatement ps = connect.prepareStatement(sql);
