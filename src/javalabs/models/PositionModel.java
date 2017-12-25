@@ -69,8 +69,6 @@ public class PositionModel extends Model{
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                     onEditClick(null);
-                    //Staff rowData = row.getItem();
-                    //System.out.println(rowData);
                 }
             });
             return row;

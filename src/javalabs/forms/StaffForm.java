@@ -60,6 +60,14 @@ public class StaffForm{
         this.currentStaff = parentContext.getCurrentItem();
     }
 
+    public TextField getCardNumber() {
+        return cardNumber;
+    }
+
+    public StaffModel getStaffModel() {
+        return staffModel;
+    }
+
     private void chooseFile(){
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPEG files", "*.jpg", "*.jpeg", "*.JPG", "*.JPEG");
@@ -148,7 +156,7 @@ public class StaffForm{
     }
 
     private void openCardList() throws Exception{
-        CardList cards = new CardList();
+        CardList cards = new CardList(this);
         cards.init();
     }
 
