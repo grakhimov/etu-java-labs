@@ -1,6 +1,8 @@
 package javalabs.classes;
+
 import javafx.scene.image.*;
 import javalabs.libraries.Database;
+
 import java.util.List;
 
 public class User {
@@ -62,26 +64,26 @@ public class User {
         this.photo = photo;
     }
 
-    public boolean callSetCardStatus(int status) throws Exception{
-        if(cardNumber == null){
+    public boolean callSetCardStatus(int status) throws Exception {
+        if (cardNumber == null) {
             return false;
         }
         Card.setCardStatus(cardNumber, status);
         return true;
     }
 
-    public boolean cardIsActive(){
+    public boolean cardIsActive() {
         String cardNumber = getCardNumber();
-        if(cardNumber == null){
+        if (cardNumber == null) {
             return false;
         }
         Database db = new Database();
         String sql = "SELECT is_active FROM cards WHERE card_number = " + cardNumber;
         List<Object[]> result = db.query(sql);
-        if(result.size() == 0){
+        if (result.size() == 0) {
             return false;
         }
         Object[] row = result.get(0);
-        return Integer.parseInt((String)row[0]) == 1;
+        return Integer.parseInt((String) row[0]) == 1;
     }
 }

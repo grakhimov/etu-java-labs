@@ -31,6 +31,7 @@ public class CropImage {
 
     private RubberBandSelection rubberBandSelection;
     private ImageView imageView;
+    private ImageView resultImage = null;
     private Stage cropStage;
 
     public CropImage(Image image) {
@@ -130,7 +131,7 @@ public class CropImage {
             g.drawImage(bufImageRGB, 0, 0, 200, 200, null);
             g.dispose();
             Image res = SwingFXUtils.toFXImage(newImage, null );
-            imageView = new ImageView(res);
+            resultImage = new ImageView(res);
             cropStage.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -245,6 +246,9 @@ public class CropImage {
     }
 
     public Image getImageView(){
-        return imageView.getImage();
+        if(resultImage == null){
+            return null;
+        }
+        return resultImage.getImage();
     }
 }

@@ -74,9 +74,16 @@ public class StaffForm{
         fileChooser.getExtensionFilters().add(extFilter);
         Stage stage = (Stage) photo.getScene().getWindow();
         File file = fileChooser.showOpenDialog(stage);
-        Image image = new Image(file.toURI().toString());
+        Image image;
+        try{
+            image = new Image(file.toURI().toString());
+        } catch (Exception e){
+            return;
+        }
         CropImage cropped = new CropImage(image);
-        photo.setImage(cropped.getImageView());
+        if(cropped.getImageView() != null) {
+            photo.setImage(cropped.getImageView());
+        }
     }
 
     private void saveForm(){
