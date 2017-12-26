@@ -85,8 +85,6 @@ public class StaffModel {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                     onEditClick(null);
-                    //Staff rowData = row.getItem();
-                    //System.out.println(rowData);
                 }
             });
             return row;
@@ -108,7 +106,10 @@ public class StaffModel {
         for(int i = 0; i < size; i++){
             // Заполнение строк таблицы
             Object[] row = result.get(i);
-            Staff staff = new Staff((Integer) row[0], (String) row[1], (String) row[2], (String) row[3], (String) row[4], (String) row[5], (ImageView) row[6]);
+            ImageView rs = (ImageView) row[6];
+            rs.setFitWidth(80);
+            rs.setFitHeight(80);
+            Staff staff = new Staff((Integer) row[0], (String) row[1], (String) row[2], (String) row[3], (String) row[4], (String) row[5], rs);
             staffData.add(staff);
         }
     }

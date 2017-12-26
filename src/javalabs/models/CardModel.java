@@ -2,16 +2,14 @@ package javalabs.models;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javalabs.classes.Card;
 import javalabs.forms.SimpleCard;
 import javalabs.libraries.Database;
 import java.util.List;
+import java.util.Optional;
 
 public class CardModel {
     private ObservableList<Card> cardData = FXCollections.observableArrayList();
@@ -22,7 +20,6 @@ public class CardModel {
     private Card currentItem = null;
     /* Связанные кнопки */
     private Button addButton;
-    private Button editButton;
     private Button deleteButton;
     private Button toggleCardButton;
     private Button unlinkButton;
@@ -35,12 +32,10 @@ public class CardModel {
     public CardModel(
             TableView<Card> cardTable,
             Button addButton,
-            Button editButton,
             Button deleteButton,
             Button toggleCardButton,
             Button unlinkButton){
         this.addButton = addButton;
-        this.editButton = editButton;
         this.deleteButton = deleteButton;
         this.toggleCardButton = toggleCardButton;
         this.unlinkButton = unlinkButton;
@@ -63,7 +58,6 @@ public class CardModel {
         cardTable.setItems(cardData);
         // Обработчики событий
         addButton.setOnMouseClicked(this::onAddClick);
-        editButton.setOnMouseClicked(this::onEditClick);
         deleteButton.setOnMouseClicked(this::onDeleteClick);
         toggleCardButton.setOnMouseClicked(this::onToggleCard);
         unlinkButton.setOnMouseClicked(this::onUnlinkCard);
@@ -71,20 +65,10 @@ public class CardModel {
             if (cardTable.getSelectionModel().getSelectedItem() != null) {
                 // Текущая выбранная строка таблицы
                 currentItem = cardTable.getSelectionModel().getSelectedItem();
-                editButton.setDisable(false);
                 deleteButton.setDisable(false);
                 toggleCardButton.setDisable(false);
                 unlinkButton.setDisable(false);
             }
-        });
-        cardTable.setRowFactory( tv -> {
-            TableRow<Card> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-                    onEditClick(null);
-                }
-            });
-            return row;
         });
     }
 
@@ -109,25 +93,48 @@ public class CardModel {
         form.init();
     }
 
-    private void onEditClick(MouseEvent event){
-
-    }
-
     private void onDeleteClick(MouseEvent event){
+        if(currentItem.getCardHolderName() != null){
+            ButtonType no = new ButtonType("Отмена", ButtonBar.ButtonData.NO);
+            ButtonType yes = new ButtonType("Удалить", ButtonBar.ButtonData.YES);
+            Alert alert = new Alert(null, "Эта карта выдана сотруднику: " + currentItem.getCardHolderName() + "\nВсё равно удалить?", no, yes);
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.get().getText().equals("Удалить")){
+                Card.deleteCard(currentItem.getNumber());
+                refresh();
+            }
+            return;
+        }
+        Card.deleteCard(currentItem.getNumber());
+        refresh();
 
     }
 
     private void onToggleCard(MouseEvent event){
-
+        if(currentItem.getCardHolderName() != null){
+            int status = currentItem.getActive().equals("Активна") ? 1 : 0;
+            try {
+                Card.setCardStatus(currentItem.getNumber(), status == 1 ? 0 : 1);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            refresh();
+        }
     }
 
     private void onUnlinkCard(MouseEvent event){
-
+        if(currentItem.getCardHolderName() != null){
+            try{
+                Card.unlinkCardByNumber(currentItem.getNumber());
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            refresh();
+        }
     }
 
     public void refresh(){
         currentItem = null;
-        editButton.setDisable(true);
         deleteButton.setDisable(true);
         toggleCardButton.setDisable(true);
         unlinkButton.setDisable(true);

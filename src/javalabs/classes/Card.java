@@ -111,6 +111,22 @@ public class Card {
         return true;
     }
 
+    public static boolean setCardStatus(String cardNumber, int status) throws Exception{
+        if(cardNumber == null){
+            return false;
+        }
+        Database db = new Database();
+        String sql = "UPDATE cards SET is_active = " + status + " WHERE card_number = " + cardNumber;
+        Connection connect = new Database().unsafeGetConnection();
+        PreparedStatement ps = connect.prepareStatement(sql);
+        if(ps.executeUpdate() > 0){
+            connect.close();
+            return false;
+        }
+        connect.close();
+        return true;
+    }
+
     private String fetchCardHolderName(){
         Database db = new Database();
         List<Object[]> result = db.query(

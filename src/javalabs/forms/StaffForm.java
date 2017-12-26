@@ -132,6 +132,8 @@ public class StaffForm{
         photo       = (ImageView)   scene.lookup("#photo");
         uploadPhoto = (Button)      scene.lookup("#uploadPhoto");
         saveButton  = (Button)      scene.lookup("#saveButton");
+        addCardButton.setDisable(true);
+        activate.setDisable(true);
         // Обработчики
         uploadPhoto.setOnMouseClicked(event -> {
             chooseFile();
@@ -155,6 +157,8 @@ public class StaffForm{
             position.setValue(currentStaff.getPosition());
             photo.setImage(currentStaff.getPhoto().getImage());
             boolean isActiveStatus = currentStaff.cardIsActive();
+            addCardButton.setDisable(false);
+            activate.setDisable(false);
             activate.setSelected(isActiveStatus);
             if(isActiveStatus){
                 activate.setText("Активна");
@@ -223,7 +227,7 @@ public class StaffForm{
             activate.setText("Активна");
         } else activate.setText("Не активна");
         try{
-            currentStaff.setCardStatus((cardStatus) ? 1 : 0);
+            currentStaff.callSetCardStatus((cardStatus) ? 1 : 0);
         } catch(Exception e){
             e.printStackTrace();
         }

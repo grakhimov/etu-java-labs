@@ -73,10 +73,12 @@ public class Staff extends User{
     }
 
     public static int delete(int id){
-        String sql = "DELETE FROM staff WHERE id = " + id;
+        String unlinkCardSql = "UPDATE cards SET staff_id = NULL, is_active = 0 WHERE staff_id = " + id;
+        String dropStaffSql = "DELETE FROM staff WHERE id = " + id;
         Database db = new Database();
         try{
-            db.update(sql);
+            db.update(unlinkCardSql);
+            db.update(dropStaffSql);
             return 0;
         } catch (Exception e){
             e.printStackTrace();

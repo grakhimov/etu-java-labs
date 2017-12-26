@@ -1,9 +1,6 @@
 package javalabs.classes;
 import javafx.scene.image.*;
 import javalabs.libraries.Database;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.List;
 
 public class User {
@@ -65,19 +62,11 @@ public class User {
         this.photo = photo;
     }
 
-    public boolean setCardStatus(int status) throws Exception{
+    public boolean callSetCardStatus(int status) throws Exception{
         if(cardNumber == null){
             return false;
         }
-        Database db = new Database();
-        String sql = "UPDATE cards SET is_active = " + status + " WHERE card_number = " + cardNumber;
-        Connection connect = new Database().unsafeGetConnection();
-        PreparedStatement ps = connect.prepareStatement(sql);
-        if(ps.executeUpdate() > 0){
-            connect.close();
-            return false;
-        }
-        connect.close();
+        Card.setCardStatus(cardNumber, status);
         return true;
     }
 

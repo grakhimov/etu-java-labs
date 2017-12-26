@@ -30,6 +30,7 @@ public class Database {
             this.url = "jdbc:mysql://" + p.getProperty("host") + ":" + p.getProperty("port") + "/" + p.getProperty("dbname") + "?autoReconnect=true&useSSL=false&characterEncoding=utf-8";
             this.user = p.getProperty("user");
             this.password = p.getProperty("password");
+            int i = 5;
         }
         catch ( Exception e ) { is = null; }
     }
@@ -68,7 +69,7 @@ public class Database {
                             Blob imageBlob = result.getBlob(columnNames[i]);
                             if(imageBlob != null) {
                                 InputStream is = imageBlob.getBinaryStream();
-                                Image image = new Image(is, 80, 0, true, true);
+                                Image image = new Image(is, 250, 0, true, true);
                                 ImageView render = new ImageView();
                                 render.setImage(image);
                                 fieldsArray[i] = render;

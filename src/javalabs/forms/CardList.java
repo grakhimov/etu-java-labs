@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -74,6 +73,7 @@ public class CardList {
         int staff_id = parent.getStaffModel().getCurrentItem().getId();
         try{
             Card.linkCardByStaffId(staff_id, currentItem);
+            parent.getStaffModel().getCurrentItem().setCardNumber(currentItem);
         } catch(Exception e){
             e.printStackTrace();
         }

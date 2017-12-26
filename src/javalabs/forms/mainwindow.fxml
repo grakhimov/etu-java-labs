@@ -129,7 +129,6 @@
                                                 <ToolBar prefHeight="40.0" prefWidth="842.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                     <items>
                                                         <Button fx:id="addCardButton" mnemonicParsing="false" text="Добавить" />
-                                                        <Button fx:id="editCardButton" disable="true" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Редактировать" />
                                                         <Button fx:id="deleteCardButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" styleClass="delete-button" text="Удалить" />
                                                         <Button fx:id="toggleCardButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" styleClass="delete-button" text="Активировать/Деактивировать" />
                                                         <Button fx:id="unlinkButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" styleClass="delete-button" text="Отвязать" />
@@ -172,15 +171,17 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="14.0" layoutY="77.0" />
-                              <TextField layoutX="14.0" layoutY="130.0" />
-                              <TextField layoutX="14.0" layoutY="186.0" />
-                              <TextField layoutX="14.0" layoutY="243.0" />
-                              <Button layoutX="89.0" layoutY="287.0" mnemonicParsing="false" text="Применить" />
+                              <TextField fx:id="host" layoutX="14.0" layoutY="77.0" />
+                              <TextField fx:id="port" layoutX="14.0" layoutY="130.0" />
+                              <TextField fx:id="user" layoutX="14.0" layoutY="239.0" />
+                              <TextField fx:id="password" layoutX="14.0" layoutY="300.0" />
+                              <Button fx:id="applysettings" layoutX="89.0" layoutY="351.0" mnemonicParsing="false" text="Применить" />
                               <Label layoutX="14.0" layoutY="61.0" text="Host" />
                               <Label layoutX="14.0" layoutY="114.0" text="Port" />
-                              <Label layoutX="14.0" layoutY="170.0" text="User" />
-                              <Label layoutX="14.0" layoutY="227.0" text="Password" />
+                              <Label layoutX="14.0" layoutY="223.0" text="User" />
+                              <Label layoutX="13.0" layoutY="284.0" text="Password" />
+                              <TextField fx:id="dbname" layoutX="14.0" layoutY="182.0" />
+                              <Label layoutX="14.0" layoutY="166.0" text="Database:" />
                            </children></Pane>
                      </content></Tab>
                     </tabs>
