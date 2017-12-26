@@ -125,7 +125,7 @@ public class StaffForm{
         firstname   = (TextField)   scene.lookup("#firstname");
         lastname    = (TextField)   scene.lookup("#lastname");
         cardNumber  = (TextField)   scene.lookup("#cardNumber");
-        activate  =   (ToggleButton)scene.lookup("#activate");
+        activate  =   (ToggleButton)scene.lookup("#isActive");
         addCardButton = (Button) scene.lookup("#add");
         division    = (ComboBox)    scene.lookup("#division");
         position    = (ComboBox)    scene.lookup("#position");
@@ -142,6 +142,9 @@ public class StaffForm{
         addCardButton.setOnMouseClicked(event -> {
             try {openCardList();} catch(Exception e){}
         });
+        activate.setOnMouseClicked(event -> {
+           toggleCardStatus();
+        });
         putDivisions();
         putPositions();
         if(isEdit && currentStaff != null){
@@ -151,6 +154,11 @@ public class StaffForm{
             division.setValue(currentStaff.getDivision());
             position.setValue(currentStaff.getPosition());
             photo.setImage(currentStaff.getPhoto().getImage());
+            boolean isActiveStatus = currentStaff.cardIsActive();
+            activate.setSelected(isActiveStatus);
+            if(isActiveStatus){
+                activate.setText("Активна");
+            } else activate.setText("Не активна");
         }
         stage.show();
     }
@@ -201,5 +209,23 @@ public class StaffForm{
             positionsData.add(row[1]);
         }
         position.setItems(positionsData);
+    }
+
+    private void toggleCardStatus(){
+        String card = cardNumber.getText();
+        boolean cardStatus = activate.isSelected();
+        if(card == null){
+            activate.setSelected(false);
+            activate.setText("Не активна");
+            return;
+        }
+        if(cardStatus) {
+            activate.setText("Активна");
+        } else activate.setText("Не активна");
+        try{
+            currentStaff.setCardStatus((cardStatus) ? 1 : 0);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

@@ -9,6 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javalabs.classes.Card;
+import javalabs.forms.SimpleCard;
 import javalabs.libraries.Database;
 import java.util.List;
 
@@ -104,7 +105,8 @@ public class CardModel {
 
 
     private void onAddClick(MouseEvent event){
-
+        SimpleCard form = new SimpleCard(this);
+        form.init();
     }
 
     private void onEditClick(MouseEvent event){

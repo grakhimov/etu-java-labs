@@ -1,8 +1,6 @@
 package javalabs.classes;
 
 import javalabs.libraries.Database;
-
-import javax.swing.text.html.ListView;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -77,6 +75,40 @@ public class Card {
         }
         connect.close();
         return 0;
+    }
+
+    public static int addCard(String cardNumber) throws Exception{
+        Database db = new Database();
+        String sql = "INSERT INTO cards (card_number) VALUES ('" + cardNumber + "')";
+        Connection connect = new Database().unsafeGetConnection();
+        PreparedStatement ps = connect.prepareStatement(sql);
+        if(ps.executeUpdate() > 0){
+            connect.close();
+            return 1;
+        }
+        connect.close();
+        return 0;
+    }
+
+    public static int deleteCard(String cardNumber){
+        String sql = "DELETE FROM cards WHERE card_number = " + cardNumber;
+        Database db = new Database();
+        try{
+            db.update(sql);
+            return 0;
+        } catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public static boolean isUnique(String cardNumber){
+        Database db = new Database();
+        List<Object[]> result = db.query("SELECT card_number FROM cards WHERE card_number = " + cardNumber);
+        if(result.size() > 0){
+            return false;
+        }
+        return true;
     }
 
     private String fetchCardHolderName(){

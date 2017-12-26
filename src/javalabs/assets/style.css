@@ -13,3 +13,7 @@
     -fx-border-color: #eee;
     -fx-padding: 5px;
 }
+
+.toggle-button:selected {
+    -fx-border-color: green;
+}

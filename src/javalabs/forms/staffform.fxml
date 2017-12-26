@@ -68,7 +68,7 @@
             </Label>
             <Button fx:id="add" layoutX="210.0" layoutY="194.0" mnemonicParsing="false" text="+" />
             <Separator layoutX="39.0" layoutY="159.0" prefHeight="3.0" prefWidth="407.0" />
-            <ToggleButton fx:id="isActive" layoutX="241.0" layoutY="194.0" mnemonicParsing="false" text="Активна" />
+            <ToggleButton styleClass="toggle-button" fx:id="isActive" layoutX="241.0" layoutY="194.0" mnemonicParsing="false" text="Активна" />
          </children>
       </AnchorPane>
    </children>

@@ -1,5 +1,10 @@
 package javalabs.classes;
 import javafx.scene.image.*;
+import javalabs.libraries.Database;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.List;
 
 public class User {
 
@@ -58,5 +63,36 @@ public class User {
 
     public void setPhoto(ImageView photo) {
         this.photo = photo;
+    }
+
+    public boolean setCardStatus(int status) throws Exception{
+        if(cardNumber == null){
+            return false;
+        }
+        Database db = new Database();
+        String sql = "UPDATE cards SET is_active = " + status + " WHERE card_number = " + cardNumber;
+        Connection connect = new Database().unsafeGetConnection();
+        PreparedStatement ps = connect.prepareStatement(sql);
+        if(ps.executeUpdate() > 0){
+            connect.close();
+            return false;
+        }
+        connect.close();
+        return true;
+    }
+
+    public boolean cardIsActive(){
+        String cardNumber = getCardNumber();
+        if(cardNumber == null){
+            return false;
+        }
+        Database db = new Database();
+        String sql = "SELECT is_active FROM cards WHERE card_number = " + cardNumber;
+        List<Object[]> result = db.query(sql);
+        if(result.size() == 0){
+            return false;
+        }
+        Object[] row = result.get(0);
+        return Integer.parseInt((String)row[0]) == 1;
     }
 }

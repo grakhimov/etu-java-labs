@@ -1,5 +1,7 @@
 package javalabs.forms;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.input.MouseEvent;
 import javalabs.classes.Card;
 import javalabs.classes.Division;
 import javalabs.classes.Position;
@@ -17,6 +19,22 @@ public class MainWindowController {
     private DivisionModel divisionModel;
     private PositionModel positionModel;
     private CardModel cardModel;
+
+    // Общие элементы интерфейса
+    @FXML
+    private Tab StaffofficeTab;
+
+    @FXML
+    private Tab IdentifiersTab;
+
+    @FXML
+    private Tab StaffTab;
+
+    @FXML
+    private Tab DivisionTab;
+
+    @FXML
+    private Tab PositionTab;
 
     // Персонал
     @FXML
@@ -83,6 +101,12 @@ public class MainWindowController {
         this.divisionModel = new DivisionModel(divisionTable, addDivisionButton, editDivisionButton, deleteDivisionButton);
         this.positionModel = new PositionModel(positionTable, addPositionButton, editPositionButton, deletePositionButton);
         this.cardModel = new CardModel(cardTable, addCardButton, editCardButton, deleteCardButton, toggleCardButton, unlinkButton);
+    }
+
+
+    public void onTabsClick(){
+       staffModel.refresh();
+       cardModel.refresh();
     }
 
 }

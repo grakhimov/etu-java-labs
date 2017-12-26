@@ -56,7 +56,7 @@ public class CardList {
         String[] cardlist = Card.getAllUnuseCards();
         items.addAll(cardlist);
         cards.setItems(items);
-        stage.setTitle("Список карт");
+        stage.setTitle("Список доступных карт");
         stage.show();
     }
 
