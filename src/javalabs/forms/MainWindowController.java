@@ -1,6 +1,9 @@
 package javalabs.forms;
+
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javalabs.classes.Card;
 import javalabs.classes.Division;
@@ -10,8 +13,6 @@ import javalabs.models.CardModel;
 import javalabs.models.DivisionModel;
 import javalabs.models.PositionModel;
 import javalabs.models.StaffModel;
-import javafx.scene.control.TableView;
-import javafx.fxml.FXML;
 
 import java.io.*;
 import java.util.Properties;
@@ -34,10 +35,10 @@ public class MainWindowController {
     private Tab StaffTab;
 
     @FXML
-    private Tab DivisionTab;
+    private Tab BusesTab;
 
     @FXML
-    private Tab PositionTab;
+    private Tab RoutesTab;
 
     // Персонал
     @FXML

@@ -1,27 +1,27 @@
 package javalabs.classes;
 
-import javafx.scene.image.*;
+import javafx.scene.image.ImageView;
 import javalabs.libraries.Database;
 
 import java.util.List;
 
-public class User {
+public class Driver {
 
     private Integer id;
     private String firstName;
     private String lastName;
-    private String cardNumber;
+    private String driverClass;
     private ImageView photo;
 
-    public User(Integer id, String firstName, String lastName, String cardNumber, ImageView photo) {
+    public Driver(Integer id, String firstName, String lastName, String driverClass, ImageView photo) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.cardNumber = cardNumber;
+        this.driverClass = driverClass;
         this.photo = photo;
     }
 
-    public User() {
+    public Driver() {
     }
 
     public Integer getId() {
@@ -48,12 +48,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
+    public String getDriverClass() {
+        return driverClass;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
+    public void setDriverClass(String driverClass) {
+        this.driverClass = driverClass;
     }
 
     public ImageView getPhoto() {
@@ -65,15 +65,15 @@ public class User {
     }
 
     public boolean callSetCardStatus(int status) throws Exception {
-        if (cardNumber == null) {
+        if (driverClass == null) {
             return false;
         }
-        Card.setCardStatus(cardNumber, status);
+        Card.setCardStatus(driverClass, status);
         return true;
     }
 
     public boolean cardIsActive() {
-        String cardNumber = getCardNumber();
+        String cardNumber = getDriverClass();
         if (cardNumber == null) {
             return false;
         }

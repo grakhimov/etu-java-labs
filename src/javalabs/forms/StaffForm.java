@@ -7,19 +7,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.image.*;
+import javalabs.classes.Staff;
+import javalabs.libraries.CropImage;
+import javalabs.libraries.Database;
+import javalabs.libraries.Images;
+import javalabs.models.StaffModel;
+
 import java.io.File;
 import java.sql.Blob;
 import java.util.HashMap;
 import java.util.List;
-import javalabs.classes.Staff;
-import javalabs.libraries.Database;
-import javalabs.libraries.Images;
-import javalabs.libraries.CropImage;
-import javalabs.models.StaffModel;
 
 
 public class StaffForm{
@@ -159,7 +160,7 @@ public class StaffForm{
         if(isEdit && currentStaff != null){
             firstname.setText(currentStaff.getFirstName());
             lastname.setText(currentStaff.getLastName());
-            cardNumber.setText(currentStaff.getCardNumber());
+            cardNumber.setText(currentStaff.getDriverClass());
             division.setValue(currentStaff.getDivision());
             position.setValue(currentStaff.getPosition());
             photo.setImage(currentStaff.getPhoto().getImage());

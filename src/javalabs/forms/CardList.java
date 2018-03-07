@@ -73,7 +73,7 @@ public class CardList {
         int staff_id = parent.getStaffModel().getCurrentItem().getId();
         try{
             Card.linkCardByStaffId(staff_id, currentItem);
-            parent.getStaffModel().getCurrentItem().setCardNumber(currentItem);
+            parent.getStaffModel().getCurrentItem().setDriverClass(currentItem);
         } catch(Exception e){
             e.printStackTrace();
         }

@@ -1,15 +1,14 @@
 package javalabs.classes;
 
 import javafx.scene.image.ImageView;
+import javalabs.libraries.Database;
+
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.List;
 
-import javalabs.libraries.Database;
-
-public class Staff extends User{
+public class Staff extends Driver {
     private String division;
     private String position;
 
