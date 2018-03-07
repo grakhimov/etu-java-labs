@@ -29,12 +29,17 @@
                                                     <Button fx:id="deleteStaffButton" disable="true" layoutX="98.0" layoutY="11.0" mnemonicParsing="false" styleClass="delete-button" text="Удалить" />
                                                 </items>
                                             </ToolBar>
-                                            <TableView fx:id="staffTable" layoutY="38.0" prefHeight="560.0" prefWidth="800.0" styleClass="table" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                            <TableView fx:id="driversTable" layoutY="38.0" prefHeight="560.0"
+                                                       prefWidth="800.0" styleClass="table"
+                                                       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                                                 <columns>
                                                     <TableColumn id="firstName" fx:id="firstName" prefWidth="150.0"
                                                                  styleClass="table-header" text="Имя"/>
                                                     <TableColumn id="lastName" fx:id="lastName" prefWidth="150.0"
                                                                  styleClass="table-header" text="Фамилия"/>
+                                                    <TableColumn id="driverClass" fx:id="driverClass" prefWidth="70.0"
+                                                                 styleClass="table-header" text="Класс водителя"/>
                                                     <TableColumn id="experience" fx:id="experience" prefWidth="70.0"
                                                                  styleClass="table-header" text="Стаж"/>
                                                     <TableColumn id="salary" fx:id="salary" minWidth="0.0"
@@ -42,8 +47,6 @@
                                                                  text="Оклад"/>
                                                     <TableColumn id="violations" fx:id="violations" prefWidth="250.0"
                                                                  styleClass="table-header" text="Нарушения"/>
-                                                    <TableColumn id="photo" fx:id="photo" prefWidth="5.0"
-                                                                 styleClass="table-header" text="Фото"/>
                                                 </columns>
                                             </TableView>
                                         </AnchorPane>

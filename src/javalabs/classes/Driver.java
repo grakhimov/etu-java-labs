@@ -1,9 +1,12 @@
 package javalabs.classes;
 
-import javafx.scene.image.ImageView;
 import javalabs.libraries.Database;
 
-import java.util.List;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.HashMap;
 
 public class Driver {
 
@@ -11,17 +14,88 @@ public class Driver {
     private String firstName;
     private String lastName;
     private String driverClass;
-    private ImageView photo;
+    private Integer experience;
+    private Double salary;
+    private HashMap<Integer, String> violations;
 
-    public Driver(Integer id, String firstName, String lastName, String driverClass, ImageView photo) {
+    public Driver() {
+    }
+
+    public Driver(Integer id, String firstName, String lastName, String driverClass, Integer experience, Double salary, HashMap<Integer, String> violations) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.driverClass = driverClass;
-        this.photo = photo;
+        this.experience = experience;
+        this.salary = salary;
+        this.violations = violations;
     }
 
-    public Driver() {
+    public static int create(String firstName, String lastName, Integer divisionId, Integer positionId, Blob photo) throws Exception {
+        InputStream inputStream = photo != null ? photo.getBinaryStream() : null;
+        String sql = "INSERT INTO staff (firstname, lastname, division_id, position_id, photo) values (?, ?, ?, ?, ?)";
+        Connection connect = new Database().unsafeGetConnection();
+        PreparedStatement ps = connect.prepareStatement(sql);
+        ps.setString(1, firstName);
+        ps.setString(2, lastName);
+        ps.setInt(3, divisionId);
+        ps.setInt(4, positionId);
+        ps.setBlob(5, inputStream);
+        if (ps.executeUpdate() > 0) {
+            connect.close();
+            return 1;
+        }
+        connect.close();
+        return 0;
+    }
+
+    public static int update(int id, String firstName, String lastName, Integer divisionId, Integer positionId, Blob photo) throws Exception {
+        InputStream inputStream = photo.getBinaryStream();
+        String sql = "UPDATE staff SET firstname = ?, lastname = ?, division_id = ?, position_id = ?, photo = ? WHERE id = ?";
+        Connection connect = new Database().unsafeGetConnection();
+        PreparedStatement ps = connect.prepareStatement(sql);
+        ps.setString(1, firstName);
+        ps.setString(2, lastName);
+        ps.setInt(3, divisionId);
+        ps.setInt(4, positionId);
+        ps.setBlob(5, inputStream);
+        ps.setInt(6, id);
+        if (ps.executeUpdate() > 0) {
+            connect.close();
+            return 1;
+        }
+        connect.close();
+        return 0;
+    }
+
+    public static int delete(int id) {
+        String unlinkCardSql = "UPDATE cards SET staff_id = NULL, is_active = 0 WHERE staff_id = " + id;
+        String dropStaffSql = "DELETE FROM staff WHERE id = " + id;
+        Database db = new Database();
+        try {
+            db.update(unlinkCardSql);
+            db.update(dropStaffSql);
+            return 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public Integer getExperience() {
+        return experience;
+    }
+
+    public void setExperience(Integer experience) {
+        this.experience = experience;
+    }
+
+    public Double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Double salary) {
+        this.salary = salary;
     }
 
     public Integer getId() {
@@ -56,34 +130,12 @@ public class Driver {
         this.driverClass = driverClass;
     }
 
-    public ImageView getPhoto() {
-        return photo;
+    public HashMap<Integer, String> getViolations() {
+        return violations;
     }
 
-    public void setPhoto(ImageView photo) {
-        this.photo = photo;
+    public void setViolations(HashMap<Integer, String> violations) {
+        this.violations = violations;
     }
 
-    public boolean callSetCardStatus(int status) throws Exception {
-        if (driverClass == null) {
-            return false;
-        }
-        Card.setCardStatus(driverClass, status);
-        return true;
-    }
-
-    public boolean cardIsActive() {
-        String cardNumber = getDriverClass();
-        if (cardNumber == null) {
-            return false;
-        }
-        Database db = new Database();
-        String sql = "SELECT is_active FROM cards WHERE card_number = " + cardNumber;
-        List<Object[]> result = db.query(sql);
-        if (result.size() == 0) {
-            return false;
-        }
-        Object[] row = result.get(0);
-        return Integer.parseInt((String) row[0]) == 1;
-    }
 }

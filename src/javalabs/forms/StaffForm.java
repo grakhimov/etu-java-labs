@@ -15,7 +15,7 @@ import javalabs.classes.Staff;
 import javalabs.libraries.CropImage;
 import javalabs.libraries.Database;
 import javalabs.libraries.Images;
-import javalabs.models.StaffModel;
+import javalabs.models.DriversModel;
 
 import java.io.File;
 import java.sql.Blob;
@@ -29,7 +29,7 @@ public class StaffForm{
 
     private HashMap<String, Integer> positionMap = new HashMap< String, Integer>();
 
-    private StaffModel staffModel;
+    private DriversModel driversModel;
 
     private ImageView photo;
 
@@ -55,9 +55,9 @@ public class StaffForm{
 
     private boolean isEdit;
 
-    public StaffForm(StaffModel parentContext, boolean editmode){
+    public StaffForm(DriversModel parentContext, boolean editmode) {
         this.isEdit = editmode;
-        this.staffModel = parentContext;
+        this.driversModel = parentContext;
         this.currentStaff = parentContext.getCurrentItem();
     }
 
@@ -65,8 +65,8 @@ public class StaffForm{
         return cardNumber;
     }
 
-    public StaffModel getStaffModel() {
-        return staffModel;
+    public DriversModel getDriversModel() {
+        return driversModel;
     }
 
     private void chooseFile(){
@@ -117,7 +117,7 @@ public class StaffForm{
         } catch (Exception e){
             e.printStackTrace();
         }
-        staffModel.refresh();
+        driversModel.refresh();
         stage.close();
     }
 

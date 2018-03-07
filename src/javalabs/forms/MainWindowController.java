@@ -7,19 +7,19 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javalabs.classes.Card;
 import javalabs.classes.Division;
+import javalabs.classes.Driver;
 import javalabs.classes.Position;
-import javalabs.classes.Staff;
 import javalabs.models.CardModel;
 import javalabs.models.DivisionModel;
+import javalabs.models.DriversModel;
 import javalabs.models.PositionModel;
-import javalabs.models.StaffModel;
 
 import java.io.*;
 import java.util.Properties;
 
 public class MainWindowController {
 
-    private StaffModel staffModel;
+    private DriversModel driversModel;
     private DivisionModel divisionModel;
     private PositionModel positionModel;
     private CardModel cardModel;
@@ -51,7 +51,7 @@ public class MainWindowController {
     private Button deleteStaffButton;
 
     @FXML
-    private TableView<Staff> staffTable;
+    private TableView<Driver> driversTable;
 
     // Подразделения
     @FXML
@@ -121,7 +121,7 @@ public class MainWindowController {
     @FXML
     private void initialize() throws Exception{
         // Инициализация разделов
-        this.staffModel = new StaffModel(staffTable, addStaffButton, editStaffButton, deleteStaffButton);
+        this.driversModel = new DriversModel(driversTable, addStaffButton, editStaffButton, deleteStaffButton);
         this.divisionModel = new DivisionModel(divisionTable, addDivisionButton, editDivisionButton, deleteDivisionButton);
         this.positionModel = new PositionModel(positionTable, addPositionButton, editPositionButton, deletePositionButton);
         this.cardModel = new CardModel(cardTable, addCardButton, deleteCardButton, toggleCardButton, unlinkButton);
@@ -161,7 +161,7 @@ public class MainWindowController {
 
     // Обновление разделов при переходе по табам
     public void onTabsClick(){
-       staffModel.refresh();
+        driversModel.refresh();
        cardModel.refresh();
     }
 

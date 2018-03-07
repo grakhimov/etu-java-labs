@@ -70,10 +70,10 @@ public class CardList {
                 }
             }
         parentCardField.setText(currentItem);
-        int staff_id = parent.getStaffModel().getCurrentItem().getId();
+        int staff_id = parent.getDriversModel().getCurrentItem().getId();
         try{
             Card.linkCardByStaffId(staff_id, currentItem);
-            parent.getStaffModel().getCurrentItem().setDriverClass(currentItem);
+            parent.getDriversModel().getCurrentItem().setDriverClass(currentItem);
         } catch(Exception e){
             e.printStackTrace();
         }
